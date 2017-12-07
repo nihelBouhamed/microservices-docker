@@ -1,0 +1,42 @@
+config-service:
+  build: 
+   context:
+    ./config-service
+  ports:
+   - "8888:8888"
+
+discovery-service:
+  build: 
+   context:
+    ./discovery-service
+  ports:
+   - "8761:8761"
+  links:
+   - config-service
+
+proxy-service:
+  build: 
+   context:
+    ./proxy-service
+  ports:
+   - "9999:9999"
+  links:
+   - config-service
+
+product-service:
+  build: 
+   context:
+    ./product-service
+  ports:
+   - "8080:8080"
+  links:
+   - config-service
+   - discovery-service
+   - proxy-service
+
+
+  
+
+
+
+ 

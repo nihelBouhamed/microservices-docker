@@ -1,0 +1,34 @@
+config-service:
+  image: config-service
+  ports:
+   - "8888:8888"
+
+discovery-service:
+  image: discovery-service
+  ports:
+   - "8761:8761"
+  links:
+   - config-service
+
+proxy-service:
+  image: proxy-service
+  ports:
+   - "9999:9999"
+  links:
+   - config-service
+
+product-service:
+  image: product-service
+  ports:
+   - "8080:8080"
+  links:
+   - config-service
+   - discovery-service
+   - proxy-service
+
+
+  
+
+
+
+ 
