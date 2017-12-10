@@ -1,39 +1,34 @@
-config-service:
-  build: 
-   context:
-    ./config-service
+version: '2'
+services:
+
+ config-service:
+  build: ./config-service
   ports:
    - "8888:8888"
-
-discovery-service:
-  build: 
-   context:
-    ./discovery-service
+ 
+ discovery-service:
+  build: ./discovery-service
   ports:
    - "8761:8761"
-  links:
-   - config-service
-
-proxy-service:
-  build: 
-   context:
-    ./proxy-service
+  
+ proxy-service:
+  build: ./proxy-service
   ports:
    - "9999:9999"
-  links:
-   - config-service
+  depends_on:
+   - "config-service"
+   - "discovery-service"
 
-product-service:
-  build: 
-   context:
-    ./product-service
+ product-service:
+  build: ./product-service
   ports:
    - "8080:8080"
-  links:
-   - config-service
-   - discovery-service
-   - proxy-service
+  depends_on:
+   - "config-service"
+   - "discovery-service"
+  
 
+  
 
   
 
